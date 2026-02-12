@@ -60,7 +60,15 @@ Below are detection samples from the best-performing model on the validation bat
 </p>
 <br>
 
-## 3. Methodology
+## 3. Methodology & Mathematics
+
+### Coordinate Transformation
+Source annotations were provided in YOLO format as normalized center coordinates $(x_c, y_c, w, h)$. To train **Faster R-CNN**, we implemented a custom data loader to convert these to absolute pixel coordinates $(x_{min}, y_{min}, x_{max}, y_{max})$:
+
+$$x_{min} = \left(x_{c} - \frac{w}{2}\right) \cdot W_{img}$$
+$$y_{min} = \left(y_{c} - \frac{h}{2}\right) \cdot H_{img}$$
+$$x_{max} = \left(x_{c} + \frac{w}{2}\right) \cdot W_{img}$$
+$$y_{max} = \left(y_{c} + \frac{h}{2}\right) \cdot H_{img}$$
 
 ### Dataset & Augmentation
 We utilized a dataset from Roboflow Universe containing **9 distinct classes**. To mitigate the initial class imbalance (e.g., 280 images for Pikachu vs. only 22 for Eevee), we implemented a rigorous synthetic augmentation pipeline:
